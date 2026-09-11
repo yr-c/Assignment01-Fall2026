@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 /**
+ * @author Yoonchan Rhie
  * JavaFX App
  */
 public class App extends Application {
