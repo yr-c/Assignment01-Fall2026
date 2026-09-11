@@ -25,6 +25,8 @@ public class App extends Application {
     @Override
     public void start(Stage stage) {
         BorderPane root = new BorderPane();
+        Scene scene = new Scene(root, 640, 480);
+
         root.setPadding(new Insets(100, 10, 10, 10));
         root.setCenter(KeyboardManager.createKeyboard());
 
@@ -43,11 +45,27 @@ public class App extends Application {
 
         root.setTop(upper);
 
-        Label keyInfoText = new Label("Press a key to begin!");
-        keyInfoText.setId("key-info-text");
-        root.setBottom(keyInfoText);
+        HBox lower = new HBox();
+        lower.prefWidthProperty().bind(scene.widthProperty());
 
-        Scene scene = new Scene(root, 640, 480);
+        Label keyInfoText = new Label("Press a key to begin!");
+        keyInfoText.setId("info-text");
+
+        Label progressInfoText = new Label("N/A");
+        progressInfoText.setId("info-text");
+
+        // Force the first label to expand horizontally
+        HBox.setHgrow(keyInfoText, javafx.scene.layout.Priority.ALWAYS);
+        // Ensure its text aligns to the left side of its expanded bounds
+        keyInfoText.setMaxWidth(Double.MAX_VALUE);
+        keyInfoText.setAlignment(Pos.BOTTOM_LEFT);
+
+        // Ensure the second label aligns to the right side
+        progressInfoText.setMaxWidth(Double.MAX_VALUE);
+        progressInfoText.setAlignment(Pos.BOTTOM_RIGHT);
+
+        lower.getChildren().addAll(keyInfoText, progressInfoText);
+        root.setBottom(lower);
 
         scene.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
             keyInfoText.setStyle("-fx-text-fill: black");

@@ -19,7 +19,7 @@
     -fx-cursor: hand;
 }
 
-#key-info-text {
+#info-text {
     -fx-font-family: arial;
     -fx-font-style: italic;
     -fx-font-weight: normal;
