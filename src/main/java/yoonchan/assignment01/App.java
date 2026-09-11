@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -26,12 +27,20 @@ public class App extends Application {
         root.setPadding(new Insets(100, 10, 10, 10));
         root.setCenter(KeyboardManager.createKeyboard());
 
+        VBox upper = new VBox();
         Label text = new Label("Try typing this text. Do it as quickly and accurately as you can.");
         text.setMaxWidth(400);
         text.setWrapText(true);
+        text.setAlignment(Pos.CENTER);
 
-        BorderPane.setAlignment(text, javafx.geometry.Pos.CENTER);
-        root.setTop(text);
+        TextField textField = new TextField();
+        textField.setMaxWidth(400);
+        textField.setAlignment(Pos.CENTER);
+
+        upper.getChildren().addAll(text, textField);
+        upper.setAlignment(Pos.CENTER);
+
+        root.setTop(upper);
 
         Scene scene = new Scene(root, 640, 480);
 
