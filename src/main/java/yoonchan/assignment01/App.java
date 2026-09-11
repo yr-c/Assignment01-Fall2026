@@ -1,4 +1,4 @@
-package yoonchan.assignment01;
+package yoonchan.assignment01; // Make sure this matches your package
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -17,10 +17,6 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
-/**
- * @author Yoonchan Rhie
- * JavaFX App
- */
 public class App extends Application {
 
     @Override
@@ -51,7 +47,6 @@ public class App extends Application {
 
         TextField textField = new TextField();
         textField.setPrefWidth(400);
-        promptText.setMaxWidth(550);
         textField.setAlignment(Pos.CENTER);
 
         textFieldSection.getChildren().addAll(resetButton, textField, nextButton);
@@ -68,21 +63,41 @@ public class App extends Application {
         Label keyInfoText = new Label("Press a key to begin!");
         keyInfoText.setId("info-text");
 
+        Label statsInfoText = new Label("Correct: 0 | Incorrect: 0");
+        statsInfoText.setId("info-text");
+
         Label progressInfoText = new Label(String.format("1/%d", TextManager.getTexts().length));
         progressInfoText.setId("info-text");
 
         // Force the first label to expand horizontally
         HBox.setHgrow(keyInfoText, javafx.scene.layout.Priority.ALWAYS);
-        // Ensure its text aligns to the left side of its expanded bounds
         keyInfoText.setMaxWidth(Double.MAX_VALUE);
         keyInfoText.setAlignment(Pos.BOTTOM_LEFT);
 
-        // Ensure the second label aligns to the right side
+        // Center the new stats label
+        HBox.setHgrow(statsInfoText, javafx.scene.layout.Priority.ALWAYS);
+        statsInfoText.setMaxWidth(Double.MAX_VALUE);
+        statsInfoText.setAlignment(Pos.BOTTOM_CENTER);
+
+        // Ensure the third label aligns to the right side
         progressInfoText.setMaxWidth(Double.MAX_VALUE);
         progressInfoText.setAlignment(Pos.BOTTOM_RIGHT);
 
-        lower.getChildren().addAll(keyInfoText, progressInfoText);
+        lower.getChildren().addAll(keyInfoText, statsInfoText, progressInfoText);
         root.setBottom(lower);
+
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            TextManager.processInput(oldValue, newValue);
+
+            statsInfoText.setText(String.format("Correct: %d | Incorrect: %d",
+                    TextManager.getCorrectCount(), TextManager.getIncorrectCount()));
+
+            if (!newValue.isEmpty() && !TextManager.getCurrentText().startsWith(newValue)) {
+                textField.setStyle("-fx-text-inner-color: red;");
+            } else {
+                textField.setStyle("-fx-text-inner-color: black;");
+            }
+        });
 
         scene.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
             keyInfoText.setStyle("-fx-text-fill: black");
@@ -93,8 +108,7 @@ public class App extends Application {
                     Button spaceButton = KeyboardManager.getButtonFromKey("SPACE");
                     spaceButton.setStyle(style);
                     keyInfoText.setText("SPACE");
-
-                    e.consume(); // Prevents the space bar from triggering focused UI controls
+                    e.consume();
                     return;
 
                 case SHIFT:
@@ -102,7 +116,6 @@ public class App extends Application {
                         shift.setStyle(style);
                     }
                     keyInfoText.setText("SHIFT");
-
                     KeyboardManager.setPunctuationKeys(KeyboardManager.Case.UPPERCASE);
                     return;
 
@@ -130,15 +143,13 @@ public class App extends Application {
                 case SPACE:
                     Button spaceButton = KeyboardManager.getButtonFromKey("SPACE");
                     spaceButton.setStyle(style);
-
-                    e.consume(); // Prevents the space bar from triggering focused UI controls
+                    e.consume();
                     return;
 
                 case SHIFT:
                     for (Button shift : KeyboardManager.getShiftKeys()) {
                         shift.setStyle(style);
                     }
-
                     KeyboardManager.setPunctuationKeys(KeyboardManager.Case.LOWERCASE);
                     return;
 
@@ -154,13 +165,17 @@ public class App extends Application {
 
         resetButton.setOnAction(e -> {
             promptText.setText(TextManager.cycleToFirstText());
+            TextManager.resetStats();
             textField.clear();
+            statsInfoText.setText("Correct: 0 | Incorrect: 0");
             progressInfoText.setText(String.format("%d/%d", TextManager.getCurrentTextIndex() + 1, TextManager.getTexts().length));
         });
 
         nextButton.setOnAction(e -> {
             promptText.setText(TextManager.cycleToNextText());
+            TextManager.resetStats();
             textField.clear();
+            statsInfoText.setText("Correct: 0 | Incorrect: 0");
             progressInfoText.setText(String.format("%d/%d", TextManager.getCurrentTextIndex() + 1, TextManager.getTexts().length));
         });
 
