@@ -50,12 +50,14 @@ public class App extends Application {
         Scene scene = new Scene(root, 640, 480);
 
         scene.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
+            keyInfoText.setStyle("-fx-text-fill: black");
             String style = KeyboardManager.getHeldKeyStyleString();
 
             switch (e.getCode()) {
                 case SPACE:
                     Button spaceButton = KeyboardManager.getButtonFromKey("SPACE");
                     spaceButton.setStyle(style);
+                    keyInfoText.setText("SPACE");
 
                     e.consume(); // Prevents the space bar from triggering focused UI controls
                     return;
@@ -64,6 +66,7 @@ public class App extends Application {
                     for (Button shift : KeyboardManager.getShiftKeys()) {
                         shift.setStyle(style);
                     }
+                    keyInfoText.setText("SHIFT");
 
                     KeyboardManager.setPunctuationKeys(KeyboardManager.Case.UPPERCASE);
                     return;
@@ -73,8 +76,12 @@ public class App extends Application {
                     if (KeyboardManager.hasKey(key)) {
                         Button button = KeyboardManager.getButtonFromKey(key);
                         button.setStyle(style);
+                        keyInfoText.setText(key);
+                        return;
                     }
-                    break;
+
+                    keyInfoText.setStyle("-fx-text-fill: red");
+                    keyInfoText.setText("UNSUPPORTED");
             }
         });
 
