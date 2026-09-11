@@ -1,0 +1,18 @@
+.root {
+    -fx-background-color: #73a3f0;
+}
+
+.label {
+    -fx-font-size: 18px;
+}
+
+.button {
+    -fx-background-color: white;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.button:hover {
+    -fx-background-color: white;
+    -fx-cursor: hand;
+}
