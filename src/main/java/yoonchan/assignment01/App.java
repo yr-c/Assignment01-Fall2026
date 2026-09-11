@@ -28,19 +28,23 @@ public class App extends Application {
         root.setCenter(KeyboardManager.createKeyboard());
 
         VBox upper = new VBox();
-        Label text = new Label("Try typing this text. Do it as quickly and accurately as you can.");
-        text.setMaxWidth(400);
-        text.setWrapText(true);
-        text.setAlignment(Pos.CENTER);
+        Label promptText = new Label("Try typing this text. Do it as quickly and accurately as you can.");
+        promptText.setMaxWidth(400);
+        promptText.setWrapText(true);
+        promptText.setAlignment(Pos.CENTER);
 
         TextField textField = new TextField();
         textField.setMaxWidth(400);
         textField.setAlignment(Pos.CENTER);
 
-        upper.getChildren().addAll(text, textField);
+        upper.getChildren().addAll(promptText, textField);
         upper.setAlignment(Pos.CENTER);
 
         root.setTop(upper);
+
+        Label keyInfoText = new Label("Press a key to begin!");
+        keyInfoText.setId("key-info-text");
+        root.setBottom(keyInfoText);
 
         Scene scene = new Scene(root, 640, 480);
 
