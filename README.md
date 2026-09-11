@@ -17,7 +17,7 @@ This is a submission for an assignment at Vanier college.
 ## Technologies Used
 
 - **Java:** Core application logic.
-- **CSS** Node styling.
+- **CSS**: Node styling.
 - **JavaFX:** User interface and keyboard event handling.
 - **Lombok:** Boilerplate reduction (using annotations like `@Getter`).
 
