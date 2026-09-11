@@ -30,19 +30,6 @@ public class TextManager {
     }
 
     /**
-     * Retrieves the previous text from texts by id, if there is one. Sets the current text index to match.
-     *
-     * @return The previous text from texts.
-     */
-    public static String getPreviousText() {
-        if (currentTextIndex - 1 <= 0) {
-            return texts[currentTextIndex];
-        }
-
-        return texts[--currentTextIndex];
-    }
-
-    /**
      * Retrieves the first text from texts by id. Sets the current text index to match.
      *
      * @return The first text from texts.
