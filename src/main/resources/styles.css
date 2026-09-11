@@ -16,6 +16,7 @@
 .button:hover {
     -fx-background-color: gray;
     -fx-font-size: 12px;
+    -fx-cursor: hand;
 }
 
 #keyboard-button {
