@@ -5,21 +5,89 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import lombok.Getter;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class KeyboardManager {
-    static final String[] alphabetKeysPerRow = {
+    private static Map<String, Button> keyMap = new HashMap<>(Map.of("ERR", new Button()));
+
+    @Getter
+    private static final String heldKeyStyleString = "-fx-background-color: gray";
+    @Getter
+    private static final String releasedKeyStyleString = "-fx-background-color: white";
+
+    private static final String[] alphabetKeysPerRow = {
             "QWERTYUIOP",
             "ASDFGHJKL",
             "ZXCVBNM",
             "" // Space
     };
 
-    static final String[] punctuationMarks = {
-            ";',./",
-            ":\"<>?"
-    };
+    private static final String lowercasePunctuationMarks = ";',./";
 
-    static final Insets keyboardInsets = new Insets(1, 1, 1, 1);
+    private static final String uppercasePunctuationMarks = ":\"<>?";
+
+    private static final Insets keyboardInsets = new Insets(1, 1, 1, 1);
+
+    /**
+     * Checks whether keyMap has a specific key.
+     *
+     * @param key The input key to be checked.
+     * @return Whether keyMap has the input key.
+     */
+    public static boolean hasKey(String key) {
+        return keyMap.containsKey(key);
+    }
+
+    /**
+     * Finds a button from keyMap using a String key.
+     *
+     * @param key The input key.
+     * @return The button corresponding to the key.
+     */
+    public static Button getButtonFromKey(String key) {
+        return keyMap.get(key.toUpperCase());
+    }
+
+    /**
+     * Retrieves both shift keys from keyMap.
+     *
+     * @return The references of both shift keys from keyMap.
+     */
+    public static Button[] getShiftKeys() {
+        return new Button[]{keyMap.get("LSHIFT"), keyMap.get("RSHIFT")};
+    }
+
+    /**
+     *
+     * @return
+     */
+    private static Button[] getPunctuationKeys() {
+        return new Button[]{
+                keyMap.get(";"),
+                keyMap.get("'"),
+                keyMap.get(","),
+                keyMap.get("."),
+                keyMap.get("/"),
+        };
+    }
+
+    public static void setPunctuationKeys(Case lettercase) {
+        if (lettercase.equals(Case.UPPERCASE)) {
+            for (int i = 0; i < getPunctuationKeys().length; i++) {
+                Button button = keyMap.get(lowercasePunctuationMarks.charAt(i) + "");
+                button.setText(uppercasePunctuationMarks.charAt(i) + "");
+            }
+        } else {
+            for (int i = 0; i < getPunctuationKeys().length; i++) {
+                Button button = keyMap.get(lowercasePunctuationMarks.charAt(i) + "");
+                button.setText(lowercasePunctuationMarks.charAt(i) + "");
+            }
+        }
+    }
+
 
     /**
      * Helper method to createKeyboard to make formatted HBox objects for keyboard rows.
@@ -52,29 +120,53 @@ public class KeyboardManager {
 
             for (int j = 0; j < alphabetKeysPerRow[i].length(); j++) {
                 String key = alphabetKeysPerRow[i].charAt(j) + "";
-                row.getChildren().add(new Button(key));
+                Button button = new Button(key);
+
+                row.getChildren().add(button);
+                keyMap.put(key, button);
             }
 
             keyboard.getChildren().add(row);
         }
 
-        // Rows 3 & 4
+        // Row 3
         HBox row3 = createCenteredRow();
-        row3.getChildren().add(new Button("LSHIFT"));
-        for (char c : alphabetKeysPerRow[2].toCharArray()) {
-            row3.getChildren().add(new Button(c + ""));
-        }
-        row3.getChildren().add(new Button("RSHIFT"));
 
+        String LShiftKey = "LSHIFT";
+        Button LShiftButton = new Button(LShiftKey);
+        row3.getChildren().add(LShiftButton);
+        keyMap.put(LShiftKey, LShiftButton);
+
+        for (char c : alphabetKeysPerRow[2].toCharArray()) {
+            String key = c + "";
+            Button button = new Button(key);
+
+            row3.getChildren().add(button);
+            keyMap.put(key, button);
+        }
+
+        String RShiftKey = "RSHIFT";
+        Button RShiftButton = new Button(RShiftKey);
+        row3.getChildren().add(RShiftButton);
+        keyMap.put(RShiftKey, RShiftButton);
+
+        // Row 4
         HBox row4 = createCenteredRow();
-        Button space = new Button("SPACE");
-        space.setPrefWidth(150);
-        row4.getChildren().add(space);
+        String spaceKey = "SPACE";
+        Button spaceButton = new Button(spaceKey);
+        spaceButton.setPrefWidth(150);
+
+        row4.getChildren().add(spaceButton);
+        keyMap.put(spaceKey, spaceButton);
 
         // Row 5
         HBox row5 = createCenteredRow();
-        for (char c : punctuationMarks[0].toCharArray()) {
-            row5.getChildren().add(new Button(c + ""));
+        for (char c : lowercasePunctuationMarks.toCharArray()) {
+            String key = c + "";
+            Button button = new Button(key);
+
+            row5.getChildren().add(button);
+            keyMap.put(key, button);
         }
 
         // Spacer
@@ -83,5 +175,9 @@ public class KeyboardManager {
         keyboard.getChildren().addAll(row3, row4, spacer, row5);
 
         return keyboard;
+    }
+
+    public enum Case {
+        UPPERCASE, LOWERCASE
     }
 }
