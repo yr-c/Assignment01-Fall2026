@@ -61,8 +61,9 @@ public class KeyboardManager {
     }
 
     /**
+     * Helper function to retrieve keyMap's registered punctuation keys.
      *
-     * @return
+     * @return keyMaps's registered punctuation keys.
      */
     private static Button[] getPunctuationKeys() {
         return new Button[]{
