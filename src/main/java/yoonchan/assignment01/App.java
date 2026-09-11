@@ -12,6 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.util.Objects;
@@ -30,21 +31,37 @@ public class App extends Application {
         root.setPadding(new Insets(100, 10, 10, 10));
         root.setCenter(KeyboardManager.createKeyboard());
 
+        // Upper
         VBox upper = new VBox();
-        Label promptText = new Label("Try typing this text. Do it as quickly and accurately as you can.");
-        promptText.setMaxWidth(400);
+        upper.setSpacing(20);
+
+        Label promptText = new Label(TextManager.getFirstText());
+        promptText.setPrefWidth(500);
+        promptText.setMaxWidth(550);
         promptText.setWrapText(true);
         promptText.setAlignment(Pos.CENTER);
+        promptText.setTextAlignment(TextAlignment.CENTER);
+
+        HBox textFieldSection = new HBox();
+        textFieldSection.setAlignment(Pos.CENTER);
+        textFieldSection.setSpacing(20);
+
+        Button resetButton = new Button("Reset");
+        Button nextButton = new Button("Next");
 
         TextField textField = new TextField();
-        textField.setMaxWidth(400);
+        textField.setPrefWidth(400);
+        promptText.setMaxWidth(550);
         textField.setAlignment(Pos.CENTER);
 
-        upper.getChildren().addAll(promptText, textField);
+        textFieldSection.getChildren().addAll(resetButton, textField, nextButton);
+
+        upper.getChildren().addAll(promptText, textFieldSection);
         upper.setAlignment(Pos.CENTER);
 
         root.setTop(upper);
 
+        // Lower
         HBox lower = new HBox();
         lower.prefWidthProperty().bind(scene.widthProperty());
 

@@ -8,6 +8,16 @@
     -fx-font-weight: bold;
 }
 
+.button {
+    -fx-background-color: white;
+    -fx-font-size: 12px;
+}
+
+.button:hover {
+    -fx-background-color: gray;
+    -fx-font-size: 12px;
+}
+
 #keyboard-button {
     -fx-background-color: white;
     -fx-font-size: 15px;
