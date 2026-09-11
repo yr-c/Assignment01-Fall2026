@@ -68,7 +68,7 @@ public class App extends Application {
         Label keyInfoText = new Label("Press a key to begin!");
         keyInfoText.setId("info-text");
 
-        Label progressInfoText = new Label("1/6");
+        Label progressInfoText = new Label(String.format("1/%d", TextManager.getTexts().length));
         progressInfoText.setId("info-text");
 
         // Force the first label to expand horizontally
