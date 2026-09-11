@@ -175,6 +175,10 @@ public class KeyboardManager {
 
         keyboard.getChildren().addAll(row3, row4, spacer, row5);
 
+        for (Button button : keyMap.values()) {
+            button.setId("keyboard-button");
+        }
+
         return keyboard;
     }
 
