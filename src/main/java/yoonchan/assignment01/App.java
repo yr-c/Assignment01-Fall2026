@@ -154,11 +154,13 @@ public class App extends Application {
 
         resetButton.setOnAction(e -> {
             promptText.setText(TextManager.cycleToFirstText());
+            textField.clear();
             progressInfoText.setText(String.format("%d/%d", TextManager.getCurrentTextIndex() + 1, TextManager.getTexts().length));
         });
 
         nextButton.setOnAction(e -> {
             promptText.setText(TextManager.cycleToNextText());
+            textField.clear();
             progressInfoText.setText(String.format("%d/%d", TextManager.getCurrentTextIndex() + 1, TextManager.getTexts().length));
         });
 
