@@ -11,6 +11,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 /**
  * JavaFX App
  */
@@ -19,7 +21,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) {
         BorderPane root = new BorderPane();
-        root.setPadding(new Insets(5, 5, 5, 5));
+        root.setPadding(new Insets(120, 10, 10, 10));
         root.setCenter(KeyboardManager.createKeyboard());
 
         Label text = new Label("Try typing this text. Do it as quickly and accurately as you can.");
@@ -27,6 +29,7 @@ public class App extends Application {
         root.setTop(text);
 
         Scene scene = new Scene(root, 640, 480);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles.css")).toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
