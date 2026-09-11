@@ -14,6 +14,11 @@ public class KeyboardManager {
             "" // Space
     };
 
+    static final String[] punctuationMarks = {
+            ";',./",
+            ":\"<>?"
+    };
+
     static final Insets keyboardInsets = new Insets(1, 1, 1, 1);
 
     /**
@@ -66,7 +71,16 @@ public class KeyboardManager {
         space.setPrefWidth(150);
         row4.getChildren().add(space);
 
-        keyboard.getChildren().addAll(row3, row4);
+        // Row 5
+        HBox row5 = createCenteredRow();
+        for (char c : punctuationMarks[0].toCharArray()) {
+            row5.getChildren().add(new Button(c + ""));
+        }
+
+        // Spacer
+        HBox spacer = new HBox();
+
+        keyboard.getChildren().addAll(row3, row4, spacer, row5);
 
         return keyboard;
     }
