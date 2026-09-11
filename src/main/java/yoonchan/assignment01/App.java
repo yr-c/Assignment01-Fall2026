@@ -21,10 +21,13 @@ public class App extends Application {
     @Override
     public void start(Stage stage) {
         BorderPane root = new BorderPane();
-        root.setPadding(new Insets(120, 10, 10, 10));
+        root.setPadding(new Insets(100, 10, 10, 10));
         root.setCenter(KeyboardManager.createKeyboard());
 
         Label text = new Label("Try typing this text. Do it as quickly and accurately as you can.");
+        text.setMaxWidth(400);
+        text.setWrapText(true);
+
         BorderPane.setAlignment(text, javafx.geometry.Pos.CENTER);
         root.setTop(text);
 
