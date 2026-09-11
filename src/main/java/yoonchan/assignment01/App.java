@@ -68,7 +68,7 @@ public class App extends Application {
         Label keyInfoText = new Label("Press a key to begin!");
         keyInfoText.setId("info-text");
 
-        Label progressInfoText = new Label("N/A");
+        Label progressInfoText = new Label("1/6");
         progressInfoText.setId("info-text");
 
         // Force the first label to expand horizontally
@@ -150,6 +150,16 @@ public class App extends Application {
                     }
                     break;
             }
+        });
+
+        resetButton.setOnAction(e -> {
+            promptText.setText(TextManager.getFirstText());
+            progressInfoText.setText(String.format("%d/5", TextManager.getCurrentTextIndex() + 1));
+        });
+
+        nextButton.setOnAction(e -> {
+            promptText.setText(TextManager.getNextText());
+            progressInfoText.setText(String.format("%d/5", TextManager.getCurrentTextIndex() + 1));
         });
 
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles.css")).toExternalForm());
