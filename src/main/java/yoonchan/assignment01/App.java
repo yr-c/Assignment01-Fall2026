@@ -78,6 +78,9 @@ public class App extends Application {
                         button.setStyle(style);
                         keyInfoText.setText(key);
                         return;
+                    } else if (e.getCode() == KeyCode.ENTER) {
+                        keyInfoText.setText("");
+                        return;
                     }
 
                     keyInfoText.setStyle("-fx-text-fill: red");
