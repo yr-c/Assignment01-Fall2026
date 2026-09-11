@@ -1,4 +1,4 @@
-package yoonchan.assignment01; // Make sure this matches your package
+package yoonchan.assignment01;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -31,6 +31,11 @@ public class App extends Application {
         VBox upper = new VBox();
         upper.setSpacing(20);
 
+        Label statsInfoText = new Label("Correct: 0 | Incorrect: 0");
+        statsInfoText.setId("info-text");
+        statsInfoText.setAlignment(Pos.CENTER);
+        statsInfoText.setPadding(new Insets(0, 0, 10, 0));
+
         Label promptText = new Label(TextManager.cycleToFirstText());
         promptText.setPrefWidth(500);
         promptText.setMaxWidth(550);
@@ -51,7 +56,7 @@ public class App extends Application {
 
         textFieldSection.getChildren().addAll(resetButton, textField, nextButton);
 
-        upper.getChildren().addAll(promptText, textFieldSection);
+        upper.getChildren().addAll(statsInfoText, promptText, textFieldSection);
         upper.setAlignment(Pos.CENTER);
 
         root.setTop(upper);
@@ -63,9 +68,6 @@ public class App extends Application {
         Label keyInfoText = new Label("Press a key to begin!");
         keyInfoText.setId("info-text");
 
-        Label statsInfoText = new Label("Correct: 0 | Incorrect: 0");
-        statsInfoText.setId("info-text");
-
         Label progressInfoText = new Label(String.format("1/%d", TextManager.getTexts().length));
         progressInfoText.setId("info-text");
 
@@ -74,16 +76,11 @@ public class App extends Application {
         keyInfoText.setMaxWidth(Double.MAX_VALUE);
         keyInfoText.setAlignment(Pos.BOTTOM_LEFT);
 
-        // Center the new stats label
-        HBox.setHgrow(statsInfoText, javafx.scene.layout.Priority.ALWAYS);
-        statsInfoText.setMaxWidth(Double.MAX_VALUE);
-        statsInfoText.setAlignment(Pos.BOTTOM_CENTER);
-
-        // Ensure the third label aligns to the right side
+        // Ensure the progress label aligns to the right side
         progressInfoText.setMaxWidth(Double.MAX_VALUE);
         progressInfoText.setAlignment(Pos.BOTTOM_RIGHT);
 
-        lower.getChildren().addAll(keyInfoText, statsInfoText, progressInfoText);
+        lower.getChildren().addAll(keyInfoText, progressInfoText);
         root.setBottom(lower);
 
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -92,6 +89,7 @@ public class App extends Application {
             statsInfoText.setText(String.format("Correct: %d | Incorrect: %d",
                     TextManager.getCorrectCount(), TextManager.getIncorrectCount()));
 
+            // Mistake indicator
             if (!newValue.isEmpty() && !TextManager.getCurrentText().startsWith(newValue)) {
                 textField.setStyle("-fx-text-inner-color: red;");
             } else {
