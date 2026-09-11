@@ -3,8 +3,10 @@ package yoonchan.assignment01;
 import lombok.Getter;
 
 public class TextManager {
+    @Getter
     private static final String[] texts = {
             "Try typing this text. Do it as quickly and accurately as you can.",
+            "Next type another line of input data.",
             "The quick brown fox jumps over the lazy dog.",
             "Five big quacking zephyrs jolt my wax bed.",
             "Sympathizing would fix Quaker objectives.",
@@ -19,7 +21,7 @@ public class TextManager {
      *
      * @return The next text from texts.
      */
-    public static String getNextText() {
+    public static String cycleToNextText() {
         if (currentTextIndex + 1 >= texts.length) {
             return texts[currentTextIndex];
         }
@@ -45,7 +47,7 @@ public class TextManager {
      *
      * @return The first text from texts.
      */
-    public static String getFirstText() {
+    public static String cycleToFirstText() {
         currentTextIndex = 0;
         return texts[0];
     }

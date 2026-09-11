@@ -35,7 +35,7 @@ public class App extends Application {
         VBox upper = new VBox();
         upper.setSpacing(20);
 
-        Label promptText = new Label(TextManager.getFirstText());
+        Label promptText = new Label(TextManager.cycleToFirstText());
         promptText.setPrefWidth(500);
         promptText.setMaxWidth(550);
         promptText.setWrapText(true);
@@ -153,13 +153,13 @@ public class App extends Application {
         });
 
         resetButton.setOnAction(e -> {
-            promptText.setText(TextManager.getFirstText());
-            progressInfoText.setText(String.format("%d/5", TextManager.getCurrentTextIndex() + 1));
+            promptText.setText(TextManager.cycleToFirstText());
+            progressInfoText.setText(String.format("%d/%d", TextManager.getCurrentTextIndex() + 1, TextManager.getTexts().length));
         });
 
         nextButton.setOnAction(e -> {
-            promptText.setText(TextManager.getNextText());
-            progressInfoText.setText(String.format("%d/5", TextManager.getCurrentTextIndex() + 1));
+            promptText.setText(TextManager.cycleToNextText());
+            progressInfoText.setText(String.format("%d/%d", TextManager.getCurrentTextIndex() + 1, TextManager.getTexts().length));
         });
 
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles.css")).toExternalForm());
