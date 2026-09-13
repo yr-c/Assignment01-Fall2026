@@ -24,7 +24,7 @@ public class App extends Application {
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root, 640, 480);
 
-        root.setPadding(new Insets(100, 10, 10, 10));
+        root.setPadding(new Insets(50, 10, 10, 10));
         root.setCenter(KeyboardManager.createKeyboard());
 
         // Upper
