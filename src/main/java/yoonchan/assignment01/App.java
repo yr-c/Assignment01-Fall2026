@@ -98,66 +98,53 @@ public class App extends Application {
         });
 
         scene.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
+            KeyboardManager.addPressedKey(e.getCode());
             keyInfoText.setStyle("-fx-text-fill: black");
+            keyInfoText.setText(KeyboardManager.getPressedKeys().peek().getName());
+
             String style = KeyboardManager.getHeldKeyStyleString();
+            String key = e.getCode().toString();
 
-            switch (e.getCode()) {
-                case SPACE:
-                    Button spaceButton = KeyboardManager.getButtonFromKey("SPACE");
-                    spaceButton.setStyle(style);
-                    keyInfoText.setText("SPACE");
-                    e.consume();
-                    return;
+            if (!(KeyboardManager.hasKey(key)) && !(e.getCode().equals(KeyCode.SHIFT))) {
+                System.out.println(e.getCode());
+                keyInfoText.setStyle("-fx-text-fill: red");
+                keyInfoText.setText("UNSUPPORTED");
+                return;
+            }
 
-                case SHIFT:
-                    for (Button shift : KeyboardManager.getShiftKeys()) {
-                        shift.setStyle(style);
-                    }
-                    keyInfoText.setText("SHIFT");
-                    KeyboardManager.setPunctuationKeys(KeyboardManager.Case.UPPERCASE);
-                    return;
+            Button button = KeyboardManager.getButtonFromKey(key);
+            if (e.getCode() == KeyCode.SHIFT) {
+                for (Button shift : KeyboardManager.getShiftKeys()) {
+                    shift.setStyle(style);
+                }
 
-                default:
-                    String key = e.getText().toUpperCase();
-                    if (KeyboardManager.hasKey(key)) {
-                        Button button = KeyboardManager.getButtonFromKey(key);
-                        button.setStyle(style);
-                        keyInfoText.setText(key);
-                        return;
-                    } else if (e.getCode() == KeyCode.ENTER) {
-                        keyInfoText.setText("");
-                        return;
-                    }
-
-                    keyInfoText.setStyle("-fx-text-fill: red");
-                    keyInfoText.setText("UNSUPPORTED");
+                KeyboardManager.setPunctuationKeys(KeyboardManager.Case.UPPERCASE);
+            } else {
+                button.setStyle(style);
+                e.consume();
             }
         });
 
         scene.addEventFilter(KeyEvent.KEY_RELEASED, e -> {
+            KeyboardManager.removePressedKey(e.getCode());
+
             String style = KeyboardManager.getReleasedKeyStyleString();
+            String key = e.getCode().toString();
 
-            switch (e.getCode()) {
-                case SPACE:
-                    Button spaceButton = KeyboardManager.getButtonFromKey("SPACE");
-                    spaceButton.setStyle(style);
-                    e.consume();
-                    return;
+            if (!(KeyboardManager.hasKey(key)) && !(e.getCode().equals(KeyCode.SHIFT))) {
+                return;
+            }
 
-                case SHIFT:
-                    for (Button shift : KeyboardManager.getShiftKeys()) {
-                        shift.setStyle(style);
-                    }
-                    KeyboardManager.setPunctuationKeys(KeyboardManager.Case.LOWERCASE);
-                    return;
+            Button button = KeyboardManager.getButtonFromKey(key);
+            if (e.getCode() == KeyCode.SHIFT) {
+                for (Button shift : KeyboardManager.getShiftKeys()) {
+                    shift.setStyle(style);
+                }
 
-                default:
-                    String key = e.getText().toUpperCase();
-                    if (KeyboardManager.hasKey(key)) {
-                        Button button = KeyboardManager.getButtonFromKey(key);
-                        button.setStyle(style);
-                    }
-                    break;
+                KeyboardManager.setPunctuationKeys(KeyboardManager.Case.LOWERCASE);
+            } else {
+                button.setStyle(style);
+                e.consume();
             }
         });
 
