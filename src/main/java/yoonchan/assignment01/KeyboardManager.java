@@ -14,7 +14,7 @@ import java.util.Stack;
 
 public class KeyboardManager {
     @Getter
-    private static Map<String, Button> keyMap = new HashMap<>(Map.of("ERR", new Button()));
+    private final static Map<String, Button> keyMap = new HashMap<>(Map.of("ERR", new Button()));
     @Getter
     private static final Stack<KeyCode> pressedKeys = new Stack<>();
     @Getter
