@@ -17,6 +17,9 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
+/*
+    Git hub link: https://github.com/yr-c/Assignment01-Fall2026
+ */
 public class App extends Application {
 
     @Override
